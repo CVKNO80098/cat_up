@@ -57,13 +57,13 @@ class ConfTools:
                 with open(file_name, 'r', encoding='utf-8') as self.__conf_file:
                     line = self.__conf_file.readline().strip()
                     while line:
-                        self.__name_list.append(self.__del_cr(line))
+                        self.__name_list.append(self.__del_lf(line))
                         line = self.__conf_file.readline().strip()
             elif fun_type == 2:
                 with open(file_name, 'r', encoding='utf-8') as self.__ignore_file:
                     line = self.__ignore_file.readline().strip()
                     while line:
-                        self.__ignore_list.append(self.__del_cr(line))
+                        self.__ignore_list.append(self.__del_lf(line))
                         line = self.__ignore_file.readline().strip()
             return False
         except FileNotFoundError:
@@ -75,7 +75,7 @@ class ConfTools:
         return list(set(list1) - set(list2))
 
     @staticmethod
-    def __del_cr(string):
+    def __del_lf(string):
         """
         清除回车的
         :param string:
