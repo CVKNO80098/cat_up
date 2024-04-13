@@ -17,7 +17,6 @@ class ConfTools:
         """
         result = []
         for i in file_list:
-            print(self.__ignore_list)
             if i not in self.__ignore_list:
                 result.append(i)
         return list(result)
@@ -30,15 +29,16 @@ class ConfTools:
         """
         submitted = []
         unsubmitted = []
+        define = []
 
         for i in self.__name_list:
             for j in file_list:
                 if i in j:
                     submitted.append(i)
-                else:
-                    unsubmitted.append(i)
+                    define.append(j)
 
-        undefined = self.diff_two_list(self.diff_two_list(file_list, submitted), unsubmitted)
+        unsubmitted = self.diff_two_list(self.diff_two_list(self.__name_list,submitted),unsubmitted)
+        undefined = self.diff_two_list(self.diff_two_list(file_list, submitted), define)
 
         return [submitted, unsubmitted, undefined]
 
