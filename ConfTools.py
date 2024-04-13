@@ -1,6 +1,3 @@
-import os
-
-
 class ConfTools:
     def __init__(self):
         self.__name_list = []
@@ -37,7 +34,7 @@ class ConfTools:
                     submitted.append(i)
                     define.append(j)
 
-        unsubmitted = self.diff_two_list(self.diff_two_list(self.__name_list,submitted),unsubmitted)
+        unsubmitted = self.diff_two_list(self.diff_two_list(self.__name_list, submitted), unsubmitted)
         undefined = self.diff_two_list(self.diff_two_list(file_list, submitted), define)
 
         return [submitted, unsubmitted, undefined]
@@ -48,21 +45,21 @@ class ConfTools:
     def get_ignore_list(self):
         return self.__ignore_list
 
-    def __test_file_exist(self, file_name, type):
+    def __test_file_exist(self, file_name, fun_type):
         """
                 检测文件是否存在,并初始化忽略与人员名单
                 :param file_name: 文件名
-                :param type: 值为1时conf的检测并赋值，2为igconf的检测并赋值
+                :param fun_type: 值为1时conf的检测并赋值，2为igconf的检测并赋值
                 :return: bool
         """
         try:
-            if type == 1:
+            if fun_type == 1:
                 with open(file_name, 'r', encoding='utf-8') as self.__conf_file:
                     line = self.__conf_file.readline().strip()
                     while line:
                         self.__name_list.append(self.__del_cr(line))
                         line = self.__conf_file.readline().strip()
-            elif type == 2:
+            elif fun_type == 2:
                 with open(file_name, 'r', encoding='utf-8') as self.__ignore_file:
                     line = self.__ignore_file.readline().strip()
                     while line:
@@ -73,10 +70,12 @@ class ConfTools:
             print(f'"{file_name}"文件未发现！正在创建文件，程序将退出，请注意修改')
             return True
 
-    def diff_two_list(self, list1, list2):
+    @staticmethod
+    def diff_two_list(list1, list2):
         return list(set(list1) - set(list2))
 
-    def __del_cr(self, string):
+    @staticmethod
+    def __del_cr(string):
         """
         清除回车的
         :param string:
